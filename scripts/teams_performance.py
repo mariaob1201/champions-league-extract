@@ -297,7 +297,7 @@ def create_visualizations(team_mentions, processed_metrics, avg_sentiments, team
     sns.barplot(x='Mentions', y='Team', data=top_teams_df)
     plt.title('Most Mentioned Champions League Teams')
     plt.tight_layout()
-    plt.savefig('team_mentions.png')
+    plt.savefig('plots/team_mentions.png')
 
     # 2. Performance metrics
     if processed_metrics:
@@ -334,7 +334,7 @@ def create_visualizations(team_mentions, processed_metrics, avg_sentiments, team
             plt.xticks(rotation=45, ha='right')
             plt.legend(title='Result')
             plt.tight_layout()
-            plt.savefig('team_performance.png')
+            plt.savefig('plots/team_performance.png')
 
             # Create a goals chart
             plt.figure(figsize=(12, 6))
@@ -345,7 +345,7 @@ def create_visualizations(team_mentions, processed_metrics, avg_sentiments, team
             plt.xticks(rotation=45, ha='right')
             plt.legend(title='Goals')
             plt.tight_layout()
-            plt.savefig('team_goals.png')
+            plt.savefig('plots/team_goals.png')
 
     # 3. Sentiment analysis by team
     sentiment_df = pd.DataFrame([{"Team": team, "Sentiment": sentiment}
@@ -367,7 +367,7 @@ def create_visualizations(team_mentions, processed_metrics, avg_sentiments, team
                   ha='center', va='bottom' if bar.get_height() >= 0 else 'top')
 
     plt.tight_layout()
-    plt.savefig('team_sentiment.png')
+    plt.savefig('plots/team_sentiment.png')
 
     # 4. Create an interactive Plotly visualization
     if processed_metrics:
@@ -392,8 +392,8 @@ def create_visualizations(team_mentions, processed_metrics, avg_sentiments, team
                 bubble_df,
                 x='Wins',
                 y='Sentiment',
-                size='Mentions',
-                color='Goals',
+                size='Losses',
+                color='Mentions',
                 hover_name='Team',
                 text='Team',
                 title='Champions League Teams: Performance vs Sentiment',
@@ -405,11 +405,11 @@ def create_visualizations(team_mentions, processed_metrics, avg_sentiments, team
             fig.update_layout(
                 xaxis_title='Perceived Wins (from comments)',
                 yaxis_title='Sentiment Score (-1 to 1)',
-                coloraxis_colorbar_title='Perceived Goals'
+                coloraxis_colorbar_title='Mentions'
             )
 
             # Save the interactive chart as HTML
-            fig.write_html("team_performance_interactive.html")
+            fig.write_html("plots/team_performance_interactive.html")
 
     # 5. Team performance over time (for top mentioned teams)
     # Create multi-line chart for team mentions over time
@@ -432,7 +432,7 @@ def create_visualizations(team_mentions, processed_metrics, avg_sentiments, team
     plt.grid(True, alpha=0.3)
     plt.xticks(rotation=45)
     plt.tight_layout()
-    plt.savefig('team_mentions_over_time.png')
+    plt.savefig('plots/team_mentions_over_time.png')
 
     # Create word cloud for most discussed topics
     if team_mentions:
@@ -443,7 +443,7 @@ def create_visualizations(team_mentions, processed_metrics, avg_sentiments, team
         plt.imshow(wordcloud, interpolation='bilinear')
         plt.axis('off')
         plt.tight_layout()
-        plt.savefig('team_wordcloud.png')
+        plt.savefig('plots/team_wordcloud.png')
 
     # Return a summary of findings
     summary = {
@@ -462,7 +462,7 @@ def create_visualizations(team_mentions, processed_metrics, avg_sentiments, team
 
 def main():
     # Load comments data
-    comments_df = load_comments_data('champions_league_comments.csv')
+    comments_df = load_comments_data('data/champions_league_comments.csv')
     if comments_df is None:
         print("Could not load comments data. Exiting.")
         return
@@ -511,7 +511,7 @@ def main():
     ])
 
     # Save performance metrics to CSV
-    performance_df.to_csv('team_performance_metrics.csv', index=False)
+    performance_df.to_csv('data/team_performance_metrics.csv', index=False)
     print("Saved team performance metrics to team_performance_metrics.csv")
 
     # Print summary
@@ -532,13 +532,13 @@ def main():
         print(f"  - {team}: {sentiment:.2f}")
 
     print("\nVisualizations saved to:")
-    print("- team_mentions.png")
-    print("- team_performance.png")
-    print("- team_goals.png")
-    print("- team_sentiment.png")
-    print("- team_mentions_over_time.png")
-    print("- team_wordcloud.png")
-    print("- team_performance_interactive.html")
+    print("- plots/team_mentions.png")
+    print("- plots/team_performance.png")
+    print("- plots/team_goals.png")
+    print("- plots/team_sentiment.png")
+    print("- plots/team_mentions_over_time.png")
+    print("- plots/team_wordcloud.png")
+    print("- plots/team_performance_interactive.html")
 
 
 if __name__ == "__main__":
