@@ -1,4 +1,4 @@
 # champions-league-extract
-Extraction of champions-league related data from Reddit API to summarize soccer team information into a structural way. ended up with visualizations of team perceptions from post and comments in Reddit and teams performance scores.
 
+Extracted Champions League-related data from the Reddit API to structurally summarize soccer team information. The project resulted in visualizations of team perceptions based on Reddit posts and comments, alongside performance scores.
 ![alt text](plots/team_wordcloud.png)
